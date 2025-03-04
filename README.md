@@ -1,1 +1,1 @@
-# face-blur
+# mediapipe demo apps
