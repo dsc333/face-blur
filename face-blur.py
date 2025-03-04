@@ -6,14 +6,19 @@ mp_face_detection = mp.solutions.face_detection
 face_detection = mp_face_detection.FaceDetection(min_detection_confidence=0.5)
 mp_drawing = mp.solutions.drawing_utils
 
-# Capture video from webcam
-cap = cv2.VideoCapture(0)
+# Capture video from webcam -- change to 0 or 1 if capture fails
+cap = cv2.VideoCapture(1)
 
 while cap.isOpened():
     success, image = cap.read()
     if not success:
         print("Ignoring empty camera frame.")
         continue
+    
+    height, width, channels = image.shape
+
+    # Make image smaller for improved efficiency
+    image = cv2.resize(image,(int(width/2), int(height/2)))
 
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     results = face_detection.process(image)
